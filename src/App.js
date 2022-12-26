@@ -7,13 +7,14 @@ import CryptoList from './CryptoList';
 import CryptoPctChange from './CryptoPctChange';
 
 
-const url = "https://www.worldcoinindex.com/apiservice/json?key=ntJNc4su0mDO40NOeXvLNXG8ioJ6uNrgxO3";
+
+const url = "https://www.worldcoinindex.com/apiservice/json?key=${API_KEY}";
 
 
 function App() {
 
-  const [ crypto, setCrypto ] = useState("running");
-  const [ pct, setPct ] = useState("runningPCT");
+  const [ cryptoResponseObject, setCryptoResponseObject ] = useState("");
+  const [ percentageResponseObject, setPercentageResponseObject ] = useState("");
 
 
   
@@ -77,44 +78,39 @@ const crypto_mock = {
 
 
   useEffect(() => {
-    getAllCrypto();
-    getAllPct();
-    console.log(crypto);
+    fetchCryptoRates();
+    fetchPercentageChanges();
 
   }, []);
 
-  const getAllCrypto = () => {
+  const fetchCryptoRates = () => {
     axios.get(`${url}`, {headers: {"Content-Type": "application/json"}})
     .then((response) => {
-      const allCrypto = response.crypto;
-      setCrypto(allCrypto);
+      const allCryptoRates = response.crypto;
+      setCryptoResponseObject(allCryptoRates);
     })
     .catch(error => console.error(`Error: ${error}`));
   }
 
   //PERCENTAGE CHANGE BELOW
 
-  const getAllPct = () => {
+  const fetchPercentageChanges = () => {
     axios.get(`${url}`, {headers: {"Content-Type": "application/json"}})
     .then((response) => {
-      const allPct = response.pct;
-      setCrypto(allPct);
+      const allPercentageChange = response.pct;
+      setPercentageResponseObject(allPercentageChange);
     })
     .catch(error => console.error(`Error: ${error}`));
   }
 
 
-
-
-
-
-
-  const { rates } = crypto_mock
-  const { rates } = crypto_mockPCT
-
+  
 
   return (
-    <CryptoList rates={rates} />
+    <div>
+    <CryptoList rates={crypto_mock.rates}  />
+    <CryptoPctChange percentage={crypto_mock_percentage.rates.BTC} />
+    </div>
  )
 }
 

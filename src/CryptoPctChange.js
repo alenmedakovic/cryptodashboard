@@ -2,13 +2,13 @@ import React from 'react';
 
 
 function CryptoPctChange(props) {
-  const { rates } = props;
+  const { percentage } = props;
 
   return (
     <div>
-      {Object.keys(rates).map(key => (
+      {Object.keys(percentage).map(key => (
         <div key={key}>
-          {key}: {rates[key]}
+          {key}: {percentage[key]}
         </div>
       ))}
     </div>
