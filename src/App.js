@@ -7,10 +7,8 @@ import CryptoList from './CryptoList';
 import CryptoPctChange from './CryptoPctChange';
 
 
-//TEMPORARY HAVING ISSUES WITH .ENV
-const API_KEY = "7ebb09855b9aa6759660f9c7914cc720";
 
-const baseUrl = "http://api.coinlayer.com"
+const baseUrl = "https://api.coinlore.net/api"
 
 
 function App() {
@@ -26,9 +24,9 @@ const [ percentageResponseObject, setPercentageResponseObject ] = useState({});
   }, []);
 
    const fetchCryptoRates = () => {
-    axios.get(`${baseUrl}/live?access_key=${API_KEY}`, {headers: {"Content-Type": "application/json"}})
+    axios.get(`${baseUrl}/tickers/`, {headers: {"Content-Type": "application/json"}})
     .then((response) => {
-      const cryptoResponseObject = response.data;
+      const cryptoResponseObject = response.data.data;
       setCryptoResponseObject(cryptoResponseObject);
     })
     .catch(error => console.error(`Error: ${error}`));
