@@ -3,38 +3,32 @@ import React from 'react';
 
 
 function CryptoList(cryptoResponseObject) {
-  const { rates } = cryptoResponseObject;
-
-  delete rates.success;
-  delete rates.terms;
-  delete rates.privacy;
-  delete rates.timestamp;
-  delete rates.target;
-
+   const { rates } = cryptoResponseObject;
 
   if (Object.keys(rates).length === 0) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      {Object.entries(rates).map(([key, value]) => (
-        <div key={key}>
-          {key}: {value.symbol}
-          <ul>
-            {Object.entries(value)
-            .map(([innerKey, innerValue]) => (
-              <li key={innerKey}>
-                {innerKey}: {innerValue}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
+    <table>
+      <tbody>
+        {Object.keys(rates).map(key => (
+          <tr key={key}>
+            <td>{rates[key].rank}</td>
+            <td>{rates[key].percent_change_1h}</td>
+            <td>{rates[key].percent_change_24h}</td>
+            <td>{rates[key].percent_change_7d}</td>
+            <td>{rates[key].symbol}</td>
+            <td>{rates[key].name}</td>
+            <td>{rates[key].price_usd}</td>
+            <td>{rates[key].market_cap_usd}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 
-}
+};
 
 
 
