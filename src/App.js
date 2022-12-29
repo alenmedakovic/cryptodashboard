@@ -10,61 +10,52 @@ import CryptoPctChange from './CryptoPctChange';
 //TEMPORARY HAVING ISSUES WITH .ENV
 const API_KEY = "7ebb09855b9aa6759660f9c7914cc720";
 
-
-
-const url = `http://api.coinlayer.com/list?access_key=${API_KEY}`;
-
-let mock_rates = {
-  "rates":
-  {
-    "BTC": 2.334,
-    "ABB": 3.442,
-  },
-};
+const baseUrl = "http://api.coinlayer.com"
 
 
 function App() {
 
 const [ cryptoResponseObject, setCryptoResponseObject ] = useState({});
-const [ percentageResponseObject, setPercentageResponseObject ] = useState("");
+const [ percentageResponseObject, setPercentageResponseObject ] = useState({});
 
 
 
   useEffect(() => {
     fetchCryptoRates();
-    fetchPercentageChanges();
+   // fetchPercentageChanges();
   }, []);
 
    const fetchCryptoRates = () => {
-    axios.get(`${url}`, {headers: {"Content-Type": "application/json"}})
+    axios.get(`${baseUrl}/live?access_key=${API_KEY}`, {headers: {"Content-Type": "application/json"}})
     .then((response) => {
-      const cryptoResponseObject = response.data.crypto;
+      const cryptoResponseObject = response.data;
       setCryptoResponseObject(cryptoResponseObject);
     })
     .catch(error => console.error(`Error: ${error}`));
   } 
   
-  
   //PERCENTAGE CHANGE BELOW
 
-  const fetchPercentageChanges = () => {
-    axios.get(`${url}`, {headers: {"Content-Type": "application/json"}})
+  /* const fetchPercentageChanges = () => {
+    axios.get(`${baseUrl}/change?access_key=${API_KEY}`, {headers: {"Content-Type": "application/json"}})
     .then((response) => {
-      const percentageResponseObject = response.pct;
+      const percentageResponseObject = response.data;
       setPercentageResponseObject(percentageResponseObject);
     })
     .catch(error => console.error(`Error: ${error}`));
-  }
+  } */
 
 
-  return (
+
+   return (
     <div>
       {Object.keys(cryptoResponseObject).length === 0 ? (
         <div>Loading...</div>
       ) : (
         <CryptoList rates={cryptoResponseObject} />
-      )}
+      )};
     </div>
+
   );
 }
 
