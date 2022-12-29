@@ -1,18 +1,28 @@
 import React from 'react';
 
 
-function CryptoList(props) {
-  const { rates } = props;
+function CryptoList(cryptoResponseObject) {
+  const { rates } = cryptoResponseObject;
+
+  if (Object.keys(rates).length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      {Object.keys(rates).map(key => (
+      {Object.entries(rates).map(([key, value]) => (
         <div key={key}>
-          {key}: {rates[key]}
+          {key}: {value.symbol}
         </div>
       ))}
     </div>
   );
 }
 
-export default CryptoList;
+
+
+
+export default CryptoList; 
+
+
+
