@@ -5,5 +5,5 @@
 :root {
   --font-family: "Lucida Console", "Monospace";
 
-  --color-bg: linear-gradient(90deg, rgba(190,190,190,1) 9%, rgba(255,255,255,1) 100%);
+  --color-bg: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(254,240,255,1) 95%);
 }
